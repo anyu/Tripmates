@@ -2,19 +2,10 @@
 var mysql = require('mysql');
 
 exports.dbConnection = mysql.createConnection({
-  user:'root',
-  password:'',
-  database: 'tripmates_db'
+  user:'b1396610c21c11',
+  password:'14436490',
+  database: 'heroku_c344b5c199012eb'
 });
-
-
-
-
-
-
-
-
-
 
 
 

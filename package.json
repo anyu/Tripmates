@@ -2,9 +2,9 @@
   "name": "Tripmates",
   "version": "1.0.0",
   "description": "> An app that makes it easy for friends to plan a trip together.",
-  "main": "./client/src/index.js",
+  "main": "node ./client/src/index.js",
   "scripts": {
-    "start": "nodemon ./server/server.js",
+    "start": "node ./server/server.js",
     "build": "webpack",
     "build:watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
