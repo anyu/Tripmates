@@ -3,8 +3,10 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 
+var util = require('./util.js');
 var db = require('./db/database.js');
 var app = express();
+var session = require('express-session');
 
 app.use(bodyParser.json());
 
@@ -12,10 +14,21 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../client')));
 
+app.use(session({
+  secret: 'encryption_salt',
+  resave: true,
+  saveUnitialized: true
+}));
+
+// app.get('/login',
+// function(req, res) {
+//   req.session.destroy();
+//   res.render('login');
+// });
+
 app.get('/signup', function (req, res) {
   res.render('/Signup')
 })
-
 
 app.get('/profile', function (req, res) {
   var userData = {};
@@ -52,11 +65,11 @@ app.get('/profile', function (req, res) {
 })
 
 
-app.post('/signup', function (req, res){
-  console.log("inpost request", req.body);
+app.post('/signup', function(req,res){
 
   var username = req.body.username;
   var password = req.body.password;
+  req.session.user = username;
 
   var query1 = `INSERT INTO users (username, password) VALUES ('${username}', '${password}')`;
   var query2 = `INSERT INTO logIns (username, password) VALUES ('${username}', '${password}')`;
@@ -66,17 +79,30 @@ app.post('/signup', function (req, res){
   res.send("Added to DB");
 })
 
-app.post('/login', function (req, res) {
-  console.log("inpost request", req.body);
+app.post('/login', function(req,res) {
 
   var username = req.body.username;
   var password = req.body.password;
 
-  var query2 = `INSERT INTO logIns (username, password) VALUES ('${username}', '${password}')`;
+  if(req.session.username) {
+    var query2 = `INSERT INTO logIns (username, password) VALUES ('${username}', '${password}')`;
 
-  db.dbConnection.query(query2);
-  res.send("Added to DB");
+    db.dbConnection.query(query2);
+    res.send("Added to login table");
+  } else {
+    res.send("Username does not exist.")
+  }
 })
+
+app.get('/logout', function(req,res){
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
 app.get('/userTable', function(req, res) {
   var query = `SELECT * FROM users`;
