@@ -1,5 +1,5 @@
 var express = require('express');
-// var knex = require('knex');
+var session = require('express-session');
 var path = require('path');
 var bodyParser = require('body-parser');
 
@@ -8,6 +8,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
+app.use(session({secret: 'encryption_secret'}));
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname, '../client')));
@@ -46,7 +47,7 @@ app.get('/profile', function (req, res) {
         userData['trips'] = tripArray;
         }
         res.send(userData);
-      })    
+      })
     })
   });
 })
@@ -85,10 +86,11 @@ app.post('/signup', function (req, res){
 })
 
 app.post('/login', function (req, res) {
-  console.log("inpost request", req.body);
 
   var username = req.body.username;
   var password = req.body.password;
+
+  req.session.username = username;
 
   var query2 = `INSERT INTO logIns (username, password) VALUES ('${username}', '${password}')`;
 
@@ -106,6 +108,16 @@ app.get('/userTable', function(req, res) {
   });
 })
 
+
+app.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+    if(err) {
+      console.log(err);
+    } else {
+      res.redirect('/');
+    }
+  });
+});
 
 app.post('/tripInfo', function(req, res) {
   console.log(req.body)
@@ -156,16 +168,9 @@ app.post('/tripInfo', function(req, res) {
       })
     })
   })
-      
+
 })
 
 app.listen(3000, function () {
   console.log('Listening on port 3000!')
 })
-
-
-
-
-
-
-

@@ -19,6 +19,7 @@ class Header extends React.Component {
             <Link to="/"><h1>Tripmates</h1></Link>
           </div>
           <nav>
+              <li><a href="/logout">Log out</a></li>
               <li><Link to="/login">Log in</Link></li>
               <li><Link to="/signup">Sign up</Link></li>
           </nav>
