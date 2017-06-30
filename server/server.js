@@ -11,7 +11,6 @@ var bcrypt = require('bcrypt');
 var salt = bcrypt.genSaltSync(10);
 
 var yelp = require('yelp-fusion');
-var yelpAPI = require('./yelpApi.js');
 
 app.use(bodyParser.json());
 
@@ -321,7 +320,7 @@ app.post('/addActivityVote', function(req,res) {
 // Returns YelpFusionAPI listings based on search term and location (used in YelpGallery, YelpSearch components)
 app.get('/yelp', function (req, res) {
   const resultArray = [];
-  yelp.accessToken(yelpAPI.clientId, yelpAPI.clientSecret).then(response => {
+  yelp.accessToken(process.env.YELP_CLIENT_ID, process.env.YELP_CLIENT_SECRET).then(response => {
     const client = yelp.client(response.jsonBody.access_token);
 
     client.search({
