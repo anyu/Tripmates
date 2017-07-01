@@ -3,6 +3,7 @@
 body, p {
   font-family: 'Montserrat', sans-serif;
   font-weight: 300px;
+  margin: 0;
 }
 
 h1 {
@@ -168,14 +169,14 @@ input {
   height: 60px;
   width: 300px;
   display: inline-block;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
 nav {
   margin-left: 300px;
   display: inline-block;
   float: right;
-  padding-top: 15px;
+  padding-top: 20px;
 }
 
 nav li {
@@ -197,18 +198,21 @@ nav li {
 /************************* HOMEPAGE *************************/
 
 #tagline {
-  font-size: 36px;
-  padding-top: 155px;
+  font-size: 46px;
+  font-weight: 500;
+  padding-top: 140px;
   color: white;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 #banner {
   background: #E1E1E1 url('../images/cover.jpg') no-repeat center;
+  background-size: cover;
+  background-position: top;
   display:block;
   text-align: center;
   margin: auto;
-  height: 500px;
+  height: 400px;
 }
 
 #galleryHeader {
@@ -413,7 +417,6 @@ button#activityVoteButton{
 /************************* YELP GALLERY/SEARCH *************************/
 
 .yelpContainer {
-  margin: 60px 0;
   min-height: 140px;
   text-align: center;
 }
