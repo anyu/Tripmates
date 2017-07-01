@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Link, Redirect, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import Home from './Home';
 import Login from './Login';
@@ -36,16 +36,16 @@ class App extends React.Component {
     return (
       <div>
         <Router>
-            <div>
-                <Route exact path="/" render={(props) => (<Home loggedInUser={this.state.loggedInUser} {...props} />)} />
-                <Route path="/signup" render={(props) => (<Signup checkUser={this.checkUser} loggedInUser={this.state.loggedInUser} {...props} />)} />
-                <Route path="/login" render={(props) => (<Login checkUser={this.checkUser} loggedInUser={this.state.loggedInUser} {...props} />)} />
-                <Route path="/profile" render={(props) => (<Profile loggedInUser={this.state.loggedInUser} updateCurrentTrip={this.updateCurrentTrip} currentTrip={this.state.currentTrip} {...props} />)} />
-                <Route path="/createTrip" render={(props) => (!this.state.loggedInUser ?
-                    (<Redirect to="/login"/>) : (<CreateTrip loggedInUser={this.state.loggedInUser} {...props} />))} />
-                <Route path="/contributeTrip" render={(props) => (!this.state.loggedInUser ?
-                  (<Redirect to="/login"/>) : (<ContributeTrip loggedInUser={this.state.loggedInUser} currentTrip={this.state.currentTrip} {...props} />))} />
-            </div>
+          <Switch>
+            <Route exact path="/" render={(props) => (<Home loggedInUser={this.state.loggedInUser} {...props} />)} />
+            <Route path="/signup" render={(props) => (<Signup checkUser={this.checkUser} loggedInUser={this.state.loggedInUser} {...props} />)} />
+            <Route path="/login" render={(props) => (<Login checkUser={this.checkUser} loggedInUser={this.state.loggedInUser} {...props} />)} />
+            <Route path="/profile" render={(props) => (<Profile loggedInUser={this.state.loggedInUser} updateCurrentTrip={this.updateCurrentTrip} currentTrip={this.state.currentTrip} {...props} />)} />
+            <Route path="/createTrip" render={(props) => (!this.state.loggedInUser ?
+                (<Redirect to="/login"/>) : (<CreateTrip loggedInUser={this.state.loggedInUser} {...props} />))} />
+            <Route path="/contributeTrip" render={(props) => (!this.state.loggedInUser ?
+              (<Redirect to="/login"/>) : (<ContributeTrip loggedInUser={this.state.loggedInUser} currentTrip={this.state.currentTrip} {...props} />))} />
+          </Switch>
         </Router>
       </div>
   )}
